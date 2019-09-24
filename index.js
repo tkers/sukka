@@ -8,6 +8,9 @@ const connect = url => {
     sock.on("connect_error", err => reject(err));
   }).then(s => {
     socket = s;
+    setImmediate(() => {
+      lastPromise = lastPromise.finally(() => socket.destroy());
+    });
   });
 
   const api = {};
