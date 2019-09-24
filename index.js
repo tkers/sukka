@@ -26,13 +26,17 @@ const connect = url => {
     return api.then(() => socket.emit(eventName, ...args));
   };
 
-  api.expect = eventName => {
-    return api.then(
+  api.expect = (eventName, handler) => {
+    api.then(
       () =>
         new Promise(resolve => {
           socket.once(eventName, (...args) => resolve(args));
         })
     );
+    if (handler) {
+      api.then(args => handler(...args));
+    }
+    return api;
   };
 
   api.end = handler => {
