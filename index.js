@@ -32,8 +32,15 @@ const connect = url => {
   api.expect = (eventName, handler) => {
     api.then(
       () =>
-        new Promise(resolve => {
-          socket.once(eventName, (...args) => resolve(args));
+        new Promise((resolve, reject) => {
+          const timer = setTimeout(
+            () => reject(`Timeout: Did not receive '${eventName}' event`),
+            3000
+          );
+          socket.once(eventName, (...args) => {
+            clearTimeout(timer);
+            resolve(args);
+          });
         })
     );
     if (handler) {
