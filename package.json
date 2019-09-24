@@ -1,0 +1,10 @@
+{
+  "name": "sukka",
+  "version": "0.0.1",
+  "description": "WebSocket testing made easy",
+  "main": "index.js",
+  "repository": "https://github.com/tkers/sukka.git",
+  "author": "Tijn Kersjes <tijn@divbyzero.nl>",
+  "license": "MIT",
+  "private": false
+}
