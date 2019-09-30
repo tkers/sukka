@@ -30,13 +30,13 @@ const connect = url => {
   };
 
   api.expect = (eventName, handler) => {
+    const timeoutError = new Error(
+      `Timeout: Did not receive '${eventName}' event`
+    );
     api.then(
       () =>
         new Promise((resolve, reject) => {
-          const timer = setTimeout(
-            () => reject(`Timeout: Did not receive '${eventName}' event`),
-            3000
-          );
+          const timer = setTimeout(() => reject(timeoutError), 3000);
           socket.once(eventName, (...args) => {
             clearTimeout(timer);
             resolve(args);
